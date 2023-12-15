@@ -1,66 +1,30 @@
-## Foundry
+# Decentralized Stable Coin (DSC) System
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+In the dynamic landscape of cryptocurrencies, the need for stability amidst volatility has given rise to stablecoins. These are digital currencies pegged to stable assets, typically the US dollar, providing a safe harbor during market turbulence. However, most existing stablecoins are backed by centralized entities holding physical dollars, which, while providing a measure of safety, contradicts the decentralization ethos of blockchain technology and could potentially lead to future complications.
 
-Foundry consists of:
+The Decentralized Stable Coin (DSC) system offers an innovative solution to this paradox. It leverages the power of blockchain technology to create a digital token, the DSC, which is pegged to the US dollar but operates independently of any central authority. Unlike traditional stablecoins, the DSC is backed not by physical dollars but by collateral within the system, ensuring its stability.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The DSC system employs a health factor algorithm to maintain the protocol's solvency. This algorithm calculates the risk associated with each user's position and triggers a liquidation if the health factor falls below a certain threshold. This mechanism ensures the system remains overcollateralized, providing an additional layer of security.
 
-## Documentation
 
-https://book.getfoundry.sh/
 
-## Usage
+## Architecture
 
-### Build
+The DSC system is built on the Ethereum blockchain and consists of two primary components: the DSC token and the DSCEngine contract.
 
-```shell
-$ forge build
-```
+### DSC Token
 
-### Test
+The DSC token is a digital currency that represents the stablecoin in our system. It's designed to maintain a 1:1 ratio with the US dollar. The token contract includes functions for creating (minting) and destroying (burning) tokens, which are only accessible by the owner, typically set to be the DSCEngine contract.
 
-```shell
-$ forge test
-```
+### DSCEngine Contract
 
-### Format
+The DSCEngine contract is the core of the DSC system. It manages the operations related to minting and redeeming DSC, as well as handling the deposit and withdrawal of collateral. The collateral is overcollateralized, meaning the value of collateral is always more than the value of minted DSC. This overcollateralization provides an additional layer of security, ensuring the stability of the DSC token.
 
-```shell
-$ forge fmt
-```
+## Algorithm
 
-### Gas Snapshots
+The DSCEngine contract uses an algorithm to calculate a health factor for each user's position. This health factor is a measure of the risk associated with a user's position. If the health factor falls below a certain threshold, the contract triggers a liquidation of the user's position to ensure the system remains overcollateralized.
 
-```shell
-$ forge snapshot
-```
+## Integration with Chainlink
 
-### Anvil
+The system integrates with Chainlink price feeds to get real-time price information of the collateral tokens. This ensures accurate calculation of the health factor and the collateralization ratio, contributing to the overall stability of the DSC.
 
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
